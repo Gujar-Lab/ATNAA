@@ -23,3 +23,69 @@ make
 make install
 
 #Download the vcf file from cosmic and save it into vcf tools folder
+
+
+#Download and install snpEff
+wget http://sourceforge.net/projects/snpeff/files/snpEff_latest_core.zip
+unzip snpEff_latest_core.zip
+cd snpEff/
+
+java -Xmx4g -jar snpEff.jar GRCh37.75 DU145_caveman.vcf > DU145_caveman.ann.vcf
+java -Xmx4g -jar snpEff.jar GRCh37.75 DU145_pindel.vcf > DU145_pindel.ann.vcf
+
+java -Xmx4g -jar snpEff.jar -v GRCh37.75 DU145_caveman.vcf > DU145_cave.eff.vcf
+java -Xmx4G -jar snpEff.jar eff -v -onlyCoding true -i vcf -o vcf GRCh37.64 DU145_caveman.vcf > DU145cave_output.vcf
+java -Xmx4G -jar snpEff.jar eff -v true -i vcf -o vcf GRCh37.64 DU145_caveman.vcf > DU145cave_output.vcf
+java -Xmx4G -jar snpEff.jar eff -i vcf -o vcf GRCh37.64 DU145_caveman.vcf > DU145cave_output.vcf
+
+
+grep -o 'EFF=' cavemaneff.txt | wc -l
+grep 'NON_SYNONYMOUS_CODING' cavemaneff.txt
+grep 'NON_SYNONYMOUS_CODING' cavemaneff.txt > non_syno_code.txt
+grep -o 'EFF=' non_syno_code.txt | wc -l
+grep 'NON_SYNONYMOUS_CODING' mutants.txt > coding_mutants.txt
+grep 'LOW' coding_mutants.txt
+
+sed -i 's/(/\t/g' coding_mutants.txt
+sed -i 's/)/\t/g' coding_mutants.txt
+
+sed 's/^[^EFF]*EFF/EFF/' caveman.txt  > caveeff.txt
+
+grep 'NON_SYNONYMOUS_CODING' caveeff.txt > caveeffnonsynoncode.txt
+
+grep -o 'EFF=' caveeffnonsynoncode.txt | wc -l
+grep -o 'EFF=' caveman.txt | wc -l
+grep -o 'EFF=' DU145.caveman.eff.vcf | wc -l
+
+java -Xmx4g -jar snpEff.jar -formatEff -classic GRCh37.75 DU145_pindel.vcf > DU145.pindel.eff.vcf
+java -Xmx4g -jar snpEff.jar -formatEff -classic GRCh37.75 DU145_caveman.vcf > DU145.caveman.eff.vcf
+
+grep 'PASS' DU145.caveman.eff.vcf > caveman.txt
+
+grep 'PASS' DU145.pindel.eff.vcf > pindel.txt
+
+grep -o 'PASS' pindel.txt | wc -l 
+grep -o 'EFF' pindel.txt | wc -l 
+grep -o 'EFF' DU145.pindel.eff.vcf | wc -l 
+grep 'NON_SYNONYMOUS_CODING' eff.txt
+grep 'NON_SYNONYMOUS_CODING' eff.txt > non_synon_code.txt
+grep -o 'EFF=' non_synon_code.txt | wc -l
+grep 'NON_SYNONYMOUS_CODING' non_synon_code.txt
+grep 'NON_SYNONYMOUS_CODING' non_synon_code.txt > coding.txt
+grep 'EFF' coding.txt
+grep -o 'EFF' coding.txt | wc -l
+
+sed -i 's/(/\t/g' coding.txt
+sed -i 's/|/\t/g' coding.txt
+sed -i 's/)/\t/g' coding.txt
+
+grep -o 'EFF=' eff.txt | wc -l
+sed "s/,/\n/g" eff.txt > eff2.txt
+sed -i "s/EFF=//g" eff2.txt
+sed -i "s/||/\t\t/g" eff2.txt
+sed -i "s/(/\t/g" eff2.txt
+sed -i "s/)/\t/g" eff2.txt
+sed -i "s/|/\t/g" eff2.txt
+sed -i "s/;/\t/g" eff2.txt
+
+
