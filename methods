@@ -8,7 +8,6 @@ cd vcftools
 make
 make install
 
-
 #else download the tar or zip file using following command
 
 wget https://github.com/vcftools/vcftools/tarball/master
@@ -22,13 +21,12 @@ cd vcftools/
 make 
 make install
 
-#Download the vcf file from cosmic and save it into vcf tools folder
-
-
 #Download and install snpEff
 wget http://sourceforge.net/projects/snpeff/files/snpEff_latest_core.zip
 unzip snpEff_latest_core.zip
 cd snpEff/
+
+#Download the vcf file from cosmic and save it into vcf tools folder
 
 java -Xmx4g -jar snpEff.jar GRCh37.75 DU145_caveman.vcf > DU145_caveman.ann.vcf
 java -Xmx4g -jar snpEff.jar GRCh37.75 DU145_pindel.vcf > DU145_pindel.ann.vcf
