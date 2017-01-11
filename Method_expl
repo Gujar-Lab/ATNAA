@@ -1,1 +1,21 @@
+#If git is already installed on the computer, run the following command to clone the vcftools repository to the computer
 
+git clone https://github.com/vcftools/vcftools.git
+
+cd vcftools
+./autogen.sh
+./configure
+make
+make install
+
+
+#else download the tar or zip file using following command
+
+wget https://github.com/vcftools/vcftools/tarball/master
+
+extract the file
+tar -xvf vcfools.0.X.XX.tar.gz
+
+#compile
+cd vcftools/ 
+make
