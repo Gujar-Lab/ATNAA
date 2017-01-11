@@ -18,4 +18,8 @@ tar -xvf vcfools.0.X.XX.tar.gz
 
 #compile
 cd vcftools/ 
-make
+./configure	
+make 
+make install
+
+#Download the vcf file from cosmic and save it into vcf tools folder
