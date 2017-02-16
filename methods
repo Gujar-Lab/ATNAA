@@ -27,7 +27,12 @@ unzip snpEff_latest_core.zip
 cd snpEff/
 
 #Download the vcf file from cosmic and save it into vcf tools folder
+#Through sftp-command line
+sftp "your_email_address"@sftp-cancer.sanger.ac.uk
+#Enter your password when prompted. Note that the email address must be quoted
+sftp> get /files/grch37/cell_lines/v80/VCF/pindel/905935.vcf.gz
 
+#To convert vcf to annotation file
 java -Xmx4g -jar snpEff.jar GRCh37.75 DU145_caveman.vcf > DU145_caveman.ann.vcf
 java -Xmx4g -jar snpEff.jar GRCh37.75 DU145_pindel.vcf > DU145_pindel.ann.vcf
 
